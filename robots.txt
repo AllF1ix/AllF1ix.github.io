@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://allf1ix.github.io/AllFLix1/sitemap.xml
