@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- GitHub Pages SPA redirect fix: kung galing ito sa 404.html (direct load o
-         refresh sa isang /movie/... o /tv/... URL), ibalik ang tamang path sa address
-         bar BAGO mag-render ang app, para tama ang babasahin ng script.js sa pag-load. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>AllFlix — Watch Trending Movies, TV Shows & Anime Trailers</title>
+    <meta name="description" content="Panoorin ang pinakabagong official trailers ng mga movies, TV shows, K-Drama, at anime mula sa buong mundo. Laging updated, libre, walang account na kailangan.">
+    <link rel="canonical" href="https://allf1ix.github.io/AllFLix1/">
+
+    <meta property="og:site_name" content="AllFlix">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AllFlix — Watch Trending Movies, TV Shows & Anime Trailers">
+    <meta property="og:description" content="Panoorin ang pinakabagong official trailers ng mga movies, TV shows, K-Drama, at anime mula sa buong mundo. Laging updated, libre, walang account na kailangan.">
+    <meta property="og:url" content="https://allf1ix.github.io/AllFLix1/">
+    <meta property="og:image" content="https://allf1ix.github.io/AllFLix1/og-default.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AllFlix — Watch Trending Movies, TV Shows & Anime Trailers">
+    <meta name="twitter:description" content="Panoorin ang pinakabagong official trailers ng mga movies, TV shows, K-Drama, at anime mula sa buong mundo. Laging updated, libre, walang account na kailangan.">
+    <meta name="twitter:image" content="https://allf1ix.github.io/AllFLix1/og-default.jpg">
+
+    <link rel="icon" type="image/jpeg" href="og-default.jpg">
+    <link rel="stylesheet" href="style.css?v=6">
+
     <script>
         (function () {
             var redirect = sessionStorage.getItem("allflix_redirect_path");
@@ -15,33 +34,6 @@
             }
         })();
     </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-    <!-- ===================== SEO (default/homepage values) =====================
-         Ino-override ito ng script.js sa runtime kapag nasa isang movie/TV detail
-         page (para sa Google/Bing indexing). Ang mga default value dito sa ibaba
-         ang makikita ng mga bot na HINDI nagpapatakbo ng JavaScript (kasama na ang
-         link-preview scraper ng Messenger/Facebook/Twitter), kaya dapat tama at
-         kumpleto ito kahit walang JS na tatakbo. -->
-    <title>AllFlix — Official Movie, TV & Anime Trailers</title>
-    <meta name="description" content="Panoorin ang pinakabagong official trailers ng mga movies, TV shows, K-Drama, at anime mula sa buong mundo. Laging updated, libre, walang account na kailangan.">
-    <link rel="canonical" href="https://allf1ix.github.io/AllFLix1/">
-
-    <meta property="og:site_name" content="AllFlix">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="AllFlix — Official Movie, TV & Anime Trailers">
-    <meta property="og:description" content="Panoorin ang pinakabagong official trailers ng mga movies, TV shows, K-Drama, at anime mula sa buong mundo. Laging updated, libre, walang account na kailangan.">
-    <meta property="og:url" content="https://allf1ix.github.io/AllFLix1/">
-    <meta property="og:image" content="https://allf1ix.github.io/AllFLix1/og-default.jpg">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AllFlix — Official Movie, TV & Anime Trailers">
-    <meta name="twitter:description" content="Panoorin ang pinakabagong official trailers ng mga movies, TV shows, K-Drama, at anime mula sa buong mundo. Laging updated, libre, walang account na kailangan.">
-    <meta name="twitter:image" content="https://allf1ix.github.io/AllFLix1/og-default.jpg">
-
-    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
