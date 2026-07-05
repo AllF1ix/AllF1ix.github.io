@@ -12,7 +12,7 @@ BASE_URL = "https://api.themoviedb.org/3"
 SITE_URL = "https://allf1ix.github.io"
 
 ACCESS_TOKEN = os.environ.get("TMDB_TOKEN") or "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NGNiYzA3NTJlMGEzNmZkYWM2NjU3YmIyMDZmMGJlYyIsIm5iZiI6MTc4Mjk0Nzk2NS43MTEsInN1YiI6IjZhNDVhMDdkZWI1NWZjYzQ2YjQ5ZTM5MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ilS0nk-zuZzmHq75FG6rk-1y-bcua8J6aAUC-ddcnvc"
-)
+
 
 HEADERS = {"accept": "application/json", "Authorization": f"Bearer {ACCESS_TOKEN}"}
 CATALOG_PAGES = 50
