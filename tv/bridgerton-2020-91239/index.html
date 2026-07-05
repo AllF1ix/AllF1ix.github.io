@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" translate="no">
+<head>
+    <!-- GitHub Pages SPA redirect fix: if this loaded from 404.html (direct load or
+         refresh on a /movie/... or /tv/... URL), restore the correct path in the
+         address bar BEFORE the app renders, so script.js reads the right URL on load. -->
+    <script>
+        (function () {
+            var redirect = sessionStorage.getItem("allflix_redirect_path");
+            if (redirect) {
+                sessionStorage.removeItem("allflix_redirect_path");
+                if (redirect !== location.pathname + location.search + location.hash) {
+                    history.replaceState(null, "", redirect);
+                }
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- Pinipigilan ang Google Translate popup sa Chrome (Android) -->
+    <meta name="google" content="notranslate">
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FWJEJQ406Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-FWJEJQ406Z');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1051623054427054" crossorigin="anonymous"></script>
+
+    <!-- ===================== SEO (default/homepage values) =====================
+         Overridden at runtime by script.js when on a movie/TV detail page (for
+         Google/Bing indexing). The default values below are what bots that do NOT
+         run JavaScript will see (including link-preview scrapers for
+         Messenger/Facebook/Twitter), so these must be correct and complete even
+         with no JS running. -->
+    <title>Bridgerton (2020) Trailer | AllFlix</title>
+    <meta name="description" content="Wealth, lust, and betrayal set in the backdrop of Regency era England, seen through the eyes of the powerful Bridgerton family.">
+    <link rel="canonical" href="https://allf1ix.github.io/tv/bridgerton-2020-91239">
+
+    <meta property="og:site_name" content="AllFlix">
+    <meta property="og:type" content="video.other">
+    <meta property="og:title" content="Bridgerton (2020) Trailer | AllFlix">
+    <meta property="og:description" content="Wealth, lust, and betrayal set in the backdrop of Regency era England, seen through the eyes of the powerful Bridgerton family.">
+    <meta property="og:url" content="https://allf1ix.github.io/tv/bridgerton-2020-91239">
+    <meta property="og:image" content="https://image.tmdb.org/t/p/original/6umsRLI7t0ydFwCl0JNEIO0q2LH.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bridgerton (2020) Trailer | AllFlix">
+    <meta name="twitter:description" content="Wealth, lust, and betrayal set in the backdrop of Regency era England, seen through the eyes of the powerful Bridgerton family.">
+    <meta name="twitter:image" content="https://image.tmdb.org/t/p/original/6umsRLI7t0ydFwCl0JNEIO0q2LH.jpg">
+
+    <link rel="icon" type="image/jpeg" href="/og-default.jpg">
+    <link rel="stylesheet" href="/style.css?v=12">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"TVSeries","name":"Bridgerton","description":"Wealth, lust, and betrayal set in the backdrop of Regency era England, seen through the eyes of the powerful Bridgerton family.","image":"https://image.tmdb.org/t/p/original/6umsRLI7t0ydFwCl0JNEIO0q2LH.jpg","datePublished":"2020-12-25"}</script>
+</head>
+<body>
+
+    <!-- Header & Search Navigation -->
+    <header class="navbar">
+        <div class="logo" id="navbar-brand" onclick="goHome()" style="cursor:pointer;">ALLFLIX</div>
+
+        <div class="navbar-right">
+            <div class="nav-right-group">
+                <nav class="nav-categories">
+                    <button class="nav-btn active" id="nav-trending" onclick="changeCategory('trending')">Trending</button>
+                    <button class="nav-btn" id="nav-movies" onclick="changeCategory('movie')">Movies</button>
+                    <button class="nav-btn" id="nav-tv" onclick="changeCategory('tv')">TV Shows & Anime</button>
+                </nav>
+
+                <div class="search-icon-wrapper">
+                    <button class="search-icon-btn" id="search-toggle-btn" onclick="toggleSearchBox()" aria-label="Search">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7.5"></circle>
+                            <line x1="21" y1="21" x2="16.2" y2="16.2"></line>
+                        </svg>
+                    </button>
+
+                    <!-- Interactive Search Bar (dropdown, hidden by default) -->
+                    <div class="search-box-wrapper" id="searchBoxWrapper">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Search for Movies, Anime, or Drama..." onkeyup="handleSearch(event)" autocomplete="off">
+                            <button class="search-box-btn" onclick="triggerSearch()" aria-label="Search">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="7.5"></circle>
+                                    <line x1="21" y1="21" x2="16.2" y2="16.2"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <ul class="search-suggestions" id="search-suggestions"></ul>
+                    </div>
+                </div>
+
+                <!-- Hamburger Menu Button -->
+                <button class="hamburger-btn" onclick="toggleSidePanel()" aria-label="Menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Settings Panel -->
+    <div class="side-overlay" id="sideOverlay" onclick="closeSidePanel()"></div>
+    <aside class="side-panel" id="sidePanel">
+        <div class="side-panel-header">
+            <span class="side-logo" id="side-brand">ALLFLIX</span>
+            <span class="close-panel" onclick="closeSidePanel()">&times;</span>
+        </div>
+
+        <div class="side-panel-links">
+            <button class="side-link" onclick="goHome()">
+                <span class="side-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+                </span> <span id="label-home">Home</span>
+            </button>
+            <button class="side-link" onclick="toggleLanguagePanel()">
+                <span class="side-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span> <span id="label-language">Language</span>
+            </button>
+            <button class="side-link" onclick="toggleMode()">
+                <span class="side-icon" id="mode-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </span> <span id="label-mode">Mode</span>
+            </button>
+        </div>
+
+        <div class="side-panel-footer">
+            <a href="#" id="label-download" onclick="showDownload(); return false;">Download</a>
+            <a href="#" id="label-aboutus" onclick="showAboutUs(); return false;">About Us</a>
+        </div>
+    </aside>
+
+    <!-- Language Selection Panel -->
+    <div class="lang-overlay" id="langOverlay" onclick="closeLanguagePanel()"></div>
+    <div class="lang-panel" id="langPanel">
+        <div class="lang-panel-header">
+            <span id="label-select-language">Select Language</span>
+            <span class="close-panel" onclick="closeLanguagePanel()">&times;</span>
+        </div>
+        <input type="text" class="lang-search" id="lang-search-input" placeholder="Search language..." onkeyup="filterLanguages(event)" autocomplete="off">
+        <ul class="lang-list" id="lang-list">
+            <li onclick="selectLanguage('en')" data-lang="en" class="selected">English</li>
+            <li onclick="selectLanguage('tl')" data-lang="tl">Tagalog</li>
+            <li onclick="selectLanguage('ja')" data-lang="ja">日本語 (Japanese)</li>
+            <li onclick="selectLanguage('ko')" data-lang="ko">한국어 (Korean)</li>
+            <li onclick="selectLanguage('zh')" data-lang="zh">中文 (Chinese)</li>
+            <li onclick="selectLanguage('es')" data-lang="es">Español</li>
+            <li onclick="selectLanguage('fr')" data-lang="fr">Français</li>
+            <li onclick="selectLanguage('id')" data-lang="id">Bahasa Indonesia</li>
+            <li onclick="selectLanguage('ar')" data-lang="ar">العربية (Arabic)</li>
+            <li onclick="selectLanguage('hi')" data-lang="hi">हिन्दी (Hindi)</li>
+            <li onclick="selectLanguage('pt')" data-lang="pt">Português</li>
+            <li onclick="selectLanguage('de')" data-lang="de">Deutsch</li>
+            <li onclick="selectLanguage('it')" data-lang="it">Italiano</li>
+            <li onclick="selectLanguage('ru')" data-lang="ru">Русский (Russian)</li>
+            <li onclick="selectLanguage('vi')" data-lang="vi">Tiếng Việt</li>
+            <li onclick="selectLanguage('th')" data-lang="th">ไทย (Thai)</li>
+            <li onclick="selectLanguage('tr')" data-lang="tr">Türkçe</li>
+            <li onclick="selectLanguage('nl')" data-lang="nl">Nederlands</li>
+            <li onclick="selectLanguage('pl')" data-lang="pl">Polski</li>
+            <li onclick="selectLanguage('sv')" data-lang="sv">Svenska</li>
+            <li onclick="selectLanguage('no')" data-lang="no">Norsk</li>
+            <li onclick="selectLanguage('da')" data-lang="da">Dansk</li>
+            <li onclick="selectLanguage('fi')" data-lang="fi">Suomi</li>
+            <li onclick="selectLanguage('el')" data-lang="el">Ελληνικά (Greek)</li>
+            <li onclick="selectLanguage('he')" data-lang="he">עברית (Hebrew)</li>
+            <li onclick="selectLanguage('uk')" data-lang="uk">Українська (Ukrainian)</li>
+            <li onclick="selectLanguage('cs')" data-lang="cs">Čeština</li>
+            <li onclick="selectLanguage('hu')" data-lang="hu">Magyar</li>
+            <li onclick="selectLanguage('ro')" data-lang="ro">Română</li>
+            <li onclick="selectLanguage('bn')" data-lang="bn">বাংলা (Bengali)</li>
+            <li onclick="selectLanguage('ur')" data-lang="ur">اردو (Urdu)</li>
+            <li onclick="selectLanguage('ms')" data-lang="ms">Bahasa Melayu</li>
+            <li onclick="selectLanguage('sw')" data-lang="sw">Kiswahili</li>
+            <li onclick="selectLanguage('fa')" data-lang="fa">فارسی (Persian)</li>
+            <li onclick="selectLanguage('pa')" data-lang="pa">ਪੰਜਾਬੀ (Punjabi)</li>
+            <li onclick="selectLanguage('ta')" data-lang="ta">தமிழ் (Tamil)</li>
+            <li onclick="selectLanguage('my')" data-lang="my">မြန်မာ (Burmese)</li>
+            <li onclick="selectLanguage('km')" data-lang="km">ខ្មែរ (Khmer)</li>
+        </ul>
+        <p class="lang-note" id="lang-note">Note: Titles and descriptions are automatically translated when available. Some titles may stay in their original language if a translation isn't provided by the source.</p>
+    </div>
+
+    <!-- About Us Modal (white background) -->
+    <div id="aboutModal" class="modal about-modal">
+        <div class="modal-content about-modal-content">
+            <span class="close-btn about-close" onclick="closeAboutUs()">&times;</span>
+            <div class="about-body" id="about-body-content">
+                <!-- About Us content injected by script.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Download "Coming Soon" Modal -->
+    <div id="downloadModal" class="modal download-modal">
+        <div class="modal-content download-modal-content">
+            <span class="close-btn" onclick="closeDownload()">&times;</span>
+            <div class="download-list" id="download-list">
+                <!-- 6 platform cards injected by script.js (buildDownloadCards) -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Spotlight Banner -->
+    <section class="hero" id="hero-banner" style="display:none;">
+        <div class="hero-content">
+            <span class="badge" id="banner-tag">SPOTLIGHT</span>
+            <h1 id="banner-title">Loading Spotlight...</h1>
+            <p class="meta-info"><strong id="label-cast">Cast:</strong> <span id="banner-cast">Fetching data...</span></p>
+            <p id="banner-desc">Choose a title below or use the search bar to load details.</p>
+            <button class="btn-play" onclick="openPlayer()"><span id="label-watchnow">▶ Watch Now</span></button>
+        </div>
+    </section>
+
+    <!-- Dynamic Media Grid -->
+    <section class="media-container" style="display:none;">
+        <h2 id="section-title">Trending Today</h2>
+        <div class="carousel-wrapper">
+            <button type="button" class="carousel-arrow carousel-arrow-left" onclick="scrollCarousel('media-grid-items', -1)" aria-label="Scroll left">‹</button>
+            <div class="media-grid" id="media-grid-items">
+                <!-- Posters from the TMDB API are inserted here automatically -->
+            </div>
+            <button type="button" class="carousel-arrow carousel-arrow-right" onclick="scrollCarousel('media-grid-items', 1)" aria-label="Scroll right">›</button>
+        </div>
+    </section>
+
+    <!-- Full Detail Page: shown when a movie/TV card is clicked.
+         Replaces the hero + grid; "← Back" uses browser history
+         (history.back()) to return to the exact previous scroll position. -->
+    <section class="detail-view" id="detailView" style="display: block;">
+        <div class="detail-container">
+            <button class="detail-back" onclick="closeDetail()"><span id="label-detail-back">← Back</span></button>
+
+            <div class="detail-main">
+                <div class="detail-poster">
+                    <img id="detailPoster" src="https://image.tmdb.org/t/p/w500/uXTg565ahu9RwonCX1V2Hex1NU6.jpg" alt="Bridgerton">
+                </div>
+                <div class="detail-info">
+                    <span class="detail-badge" id="detailType">TV</span>
+                    <h1 id="detailTitle">Bridgerton</h1>
+                    <div class="detail-meta">
+                        <span id="detailRating">⭐ 8.1</span>
+                        <span id="detailRuntime"></span>
+                        <span id="detailRelease">2020-12-25</span>
+                    </div>
+                    <p class="detail-overview" id="detailOverview">Wealth, lust, and betrayal set in the backdrop of Regency era England, seen through the eyes of the powerful Bridgerton family.</p>
+                    <div class="detail-genres" id="detailGenres"><span class="detail-genre-pill">Drama</span></div>
+                    <div class="detail-director" id="detailDirector"></div>
+                </div>
+            </div>
+
+            <!-- Top Cast: swipeable row (with a "peek" of the next card on the side) -->
+            <div class="detail-cast-section">
+                <h2 id="label-detail-cast">Top Cast</h2>
+                <div class="carousel-wrapper">
+                    <button type="button" class="carousel-arrow carousel-arrow-left" onclick="scrollCarousel('detailCast', -1)" aria-label="Scroll left">‹</button>
+                    <div class="detail-cast-list" id="detailCast"><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/hPtU8FTFMOneRQg7LQQdkeakJOe.jpg" alt="Ruth Gemmell" loading="lazy">
+            <div class="cast-name">Ruth Gemmell</div>
+            <div class="cast-role">Lady Violet Bridgerton</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/2MG3W8vmwYLcZaZzARv5O7GaLe2.jpg" alt="Luke Thompson" loading="lazy">
+            <div class="cast-name">Luke Thompson</div>
+            <div class="cast-role">Benedict Bridgerton</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/8U1zgiMjp7Ilglmu9NggwvDc6xe.jpg" alt="Yerin Ha" loading="lazy">
+            <div class="cast-name">Yerin Ha</div>
+            <div class="cast-role">Sophie Baek</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/hQsWTiBUpE2Jywg8vvvrDLVmG5m.jpg" alt="Luke Newton" loading="lazy">
+            <div class="cast-name">Luke Newton</div>
+            <div class="cast-role">Colin Bridgerton</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/urv0p4Mi81m1jZO8YWF1i9NpLL7.jpg" alt="Claudia Jessie" loading="lazy">
+            <div class="cast-name">Claudia Jessie</div>
+            <div class="cast-role">Eloise Bridgerton</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/2PQxOhgqnS4S4JNiAmQtquqgDjF.jpg" alt="Florence Hunt" loading="lazy">
+            <div class="cast-name">Florence Hunt</div>
+            <div class="cast-role">Hyacinth Bridgerton</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/fdIByL5EeTImhVHtSPaEMBErF2C.jpg" alt="Will Tilston" loading="lazy">
+            <div class="cast-name">Will Tilston</div>
+            <div class="cast-role">Gregory Bridgerton</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/4dsLkxU3Vcw1P97JoyGWlbYhV1h.jpg" alt="Adjoa Andoh" loading="lazy">
+            <div class="cast-name">Adjoa Andoh</div>
+            <div class="cast-role">Lady Agatha Danbury</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/yQ0J92DMiLtQYoytLJ6CuBkdeN0.jpg" alt="Julie Andrews" loading="lazy">
+            <div class="cast-name">Julie Andrews</div>
+            <div class="cast-role">Lady Whistledown (voice)</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/nlSIvTWzMEzZGljKYgpZxGcsJtv.jpg" alt="Golda Rosheuvel" loading="lazy">
+            <div class="cast-name">Golda Rosheuvel</div>
+            <div class="cast-role">Queen Charlotte</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/9gztOAk27dpZVspSJpb27ek7LlT.jpg" alt="Katie Leung" loading="lazy">
+            <div class="cast-name">Katie Leung</div>
+            <div class="cast-role">Lady Araminta Gun</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/59OPKUdFv7vfg7T8CePmmqXQTip.jpg" alt="Michelle Mao" loading="lazy">
+            <div class="cast-name">Michelle Mao</div>
+            <div class="cast-role">Rosamund Li</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/rUUpr6qdGm88Kc6zdOJtyVXwMez.jpg" alt="Isabella Wei" loading="lazy">
+            <div class="cast-name">Isabella Wei</div>
+            <div class="cast-role">Posy Li</div>
+        </div><div class="cast-card">
+            <img src="https://image.tmdb.org/t/p/w500/ltLYFcQHcaS5wdxX085Lhn0vX5v.jpg" alt="Daniel Francis" loading="lazy">
+            <div class="cast-name">Daniel Francis</div>
+            <div class="cast-role">Lord Marcus Anderson</div>
+        </div></div>
+                    <button type="button" class="carousel-arrow carousel-arrow-right" onclick="scrollCarousel('detailCast', 1)" aria-label="Scroll right">›</button>
+                </div>
+            </div>
+
+            <!-- Trailer: always a YouTube trailer, falls back to English if
+                 no trailer exists in the selected language -->
+            <div class="detail-trailer-section">
+                <h2 id="label-detail-trailer">Trailer</h2>
+                <div class="detail-trailer-wrapper" id="detailTrailerWrapper"><iframe src="https://www.youtube.com/embed/gpv7ayf_tyE" title="Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Streaming Player Overlay -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePlayer()">&times;</span>
+            <div class="video-wrapper" id="player-container">
+                <!-- Trailer-only: always just the YouTube embed goes here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <div class="footer-brand" id="footer-brand">ALL<span id="footer-brand-flix">FLIX</span></div>
+                <div class="footer-divider"></div>
+                <div class="footer-links">
+                    <div class="footer-links-row">
+                        <a href="#" id="footer-link-about" onclick="showAboutUs('about'); return false;">About</a>
+                        <a href="#" id="footer-link-benefits" onclick="showAboutUs('benefits'); return false;">Benefits</a>
+                        <a href="#" id="footer-link-support" onclick="showAboutUs('support'); return false;">Support</a>
+                    </div>
+                    <div class="footer-copy" id="footer-copy">© 2026 AllFlix. All rights reserved.</div>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.9h2.6l.4-3.1h-3v-2c0-.9.3-1.5 1.6-1.5H16.6V3.2C16.2 3.2 15 3 13.6 3c-2.9 0-4.9 1.8-4.9 5v2H5.9v3.1h2.8V21h2.8z"/></svg></a>
+                    <a href="#" aria-label="Twitter / X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 3h3.6l4 5.6L16.4 3H20l-6.2 8.1L20.4 21h-3.6l-4.4-6.1L7.6 21H4l6.6-8.6L4 3z"/></svg></a>
+                    <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12s0-3.2-.4-4.7c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.5c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.7c.2.9.9 1.6 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.5c.9-.2 1.6-.9 1.8-1.8.4-1.5.4-4.7.4-4.7zM10 15V9l5.2 3-5.2 3z"/></svg></a>
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg></a>
+                </div>
+                <div class="footer-support">Support: <a href="mailto:idamgo549@gmail.com">idamgo549@gmail.com</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js?v=5"></script>
+</body>
+</html>
