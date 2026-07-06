@@ -1033,12 +1033,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allf1ix.github.io/movie/american-pie-1999-2105</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://allf1ix.github.io/movie/rush-hour-1998-2109</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -2510,6 +2504,12 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/movie/toy-story-4-2019-301528</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allf1ix.github.io/movie/la-la-land-2016-313369</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -4099,6 +4099,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://allf1ix.github.io/movie/the-pout-pout-fish-2026-1146058</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://allf1ix.github.io/movie/satluj-2026-1155818</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -5671,6 +5677,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://allf1ix.github.io/movie/lucky-bastard-2026-1711126</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://allf1ix.github.io/movie/la-trace-2025-1711165</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -6613,12 +6625,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allf1ix.github.io/tv/the-golden-girls-1985-1678</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://allf1ix.github.io/tv/project-runway-2004-1685</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -6686,12 +6692,6 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/bones-2005-1911</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://allf1ix.github.io/tv/twin-peaks-1990-1920</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -6878,12 +6878,6 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/hawaii-five-o-1968-2303</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://allf1ix.github.io/tv/thomas-friends-1984-2304</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -7273,12 +7267,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allf1ix.github.io/tv/the-transformers-1984-4269</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://allf1ix.github.io/tv/tom-jerry-kids-show-1990-4274</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -7387,6 +7375,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://allf1ix.github.io/tv/strong-medicine-2000-4544</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://allf1ix.github.io/tv/curb-your-enthusiasm-2000-4546</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -7483,6 +7477,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://allf1ix.github.io/tv/the-fairly-oddparents-2001-4630</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://allf1ix.github.io/tv/raw-1993-4656</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -7526,6 +7526,12 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/icarly-2007-5371</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allf1ix.github.io/tv/emergency-1972-5375</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -8425,12 +8431,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allf1ix.github.io/tv/geordie-shore-2011-39416</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://allf1ix.github.io/tv/you-hee-yeol-s-sketchbook-2009-39429</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -8767,12 +8767,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://allf1ix.github.io/tv/black-butler-2008-50712</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://allf1ix.github.io/tv/among-friends-1998-50821</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -8780,6 +8774,12 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/sleepy-hollow-2013-50825</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allf1ix.github.io/tv/defiance-2013-51704</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -8948,12 +8948,6 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/scorpion-2014-60797</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://allf1ix.github.io/tv/the-last-ship-2014-60802</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -10177,7 +10171,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://allf1ix.github.io/tv/the-misfit-of-demon-king-academy-2020-97617</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://allf1ix.github.io/tv/mayor-of-kingstown-2021-97951</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allf1ix.github.io/tv/keep-running-2014-98031</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -10412,12 +10418,6 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/the-smurfs-2021-123591</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://allf1ix.github.io/tv/perfect-world-2021-124003</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -10681,6 +10681,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://allf1ix.github.io/tv/the-truth-2022-203003</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://allf1ix.github.io/tv/oshi-no-ko-2023-203737</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -10790,12 +10796,6 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/fufu-kokan-modorenai-yoru-2023-212568</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://allf1ix.github.io/tv/la-promesa-2023-212907</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -11168,6 +11168,12 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/the-amazing-digital-circus-2023-261145</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://allf1ix.github.io/tv/the-king-of-stand-up-comedy-2024-261391</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -11588,12 +11594,6 @@
   </url>
   <url>
     <loc>https://allf1ix.github.io/tv/bittersweet-love-2026-316540</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://allf1ix.github.io/tv/seeking-persephone-2026-316830</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
