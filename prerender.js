@@ -25,6 +25,12 @@
  *      gaya ng dati at ia-update lang uli ang parehong content — walang
  *      conflict, mas mabilis lang ang unang paint at 100% crawlable na.
  *
+ *   [UPDATE] Ang JSON-LD schema (buildHead) ay pinalawak na ngayon para
+ *   isama ang aggregateRating, genre, director, at trailer (VideoObject) —
+ *   ito ang nagbibigay ng chance na lumabas ang star ratings/rich results
+ *   sa Google Search. Walang extra API call na kailangan dahil galing lang
+ *   ito sa parehong `data.credits` / `data.videos` na kinukuha na natin.
+ *
  * PAANO GAMITIN:
  *   1. npm install node-fetch@2   (kung wala ka pang "fetch" sa Node version mo)
  *   2. Siguraduhing kasama sa parehong folder: index.html, sitemap.xml
@@ -105,13 +111,48 @@ function buildHead(data, type, canonicalPath) {
         : (data.poster_path ? IMG_URL + data.poster_path : DEFAULT_IMAGE);
     const canonicalUrl = SITE_URL + canonicalPath;
 
+    // --- [NEW] enriched schema helpers (reuse ng data.credits / data.videos) ---
+    const director = data.credits && data.credits.crew
+        ? data.credits.crew.find(c => c.job === "Director")
+        : null;
+
+    const trailerVideo = data.videos && data.videos.results
+        ? (data.videos.results.find(v => v.site === "YouTube" && v.type === "Trailer" && v.official) ||
+           data.videos.results.find(v => v.site === "YouTube" && v.type === "Trailer") ||
+           data.videos.results.find(v => v.site === "YouTube"))
+        : null;
+
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": type === "tv" ? "TVSeries" : "Movie",
         name: name,
         description: data.overview || undefined,
         image: image,
-        datePublished: data.release_date || data.first_air_date || undefined
+        datePublished: data.release_date || data.first_air_date || undefined,
+        genre: (data.genres || []).map(g => g.name),
+        ...(data.vote_average ? {
+            aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: data.vote_average.toFixed(1),
+                bestRating: "10",
+                ratingCount: data.vote_count || 1
+            }
+        } : {}),
+        ...(director ? {
+            director: {
+                "@type": "Person",
+                name: director.name
+            }
+        } : {}),
+        ...(trailerVideo ? {
+            trailer: {
+                "@type": "VideoObject",
+                name: `${name} Trailer`,
+                embedUrl: `https://www.youtube.com/embed/${trailerVideo.key}`,
+                thumbnailUrl: image,
+                uploadDate: data.release_date || data.first_air_date || undefined
+            }
+        } : {})
     };
 
     return `
