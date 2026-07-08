@@ -22,8 +22,12 @@ const DEFAULT_DESCRIPTION = "Watch the latest official trailers for movies, TV s
 const TRENDING_TOTAL = 12;
 
 // Para sa Movies / TV Shows & Anime catalog: 50 pages x 20 items = 1000 items
-const CATALOG_PAGES = 50;
-const MAX_CATALOG_ITEMS = 1000;
+// BUG FIX: dati 50 pages (1000 items) sabay-sabay na pino-fetch tuwing pipindutin
+// ang Movies/TV tab, at hinihintay munang LAHAT bumalik bago may lumabas na kahit
+// isang poster — kaya naramdamang mabagal/malag. 15 pages (300 items) ay sapat na
+// sapat para sa pag-browse, at mas mabilis nang lumabas ang unang batch.
+const CATALOG_PAGES = 15;
+const MAX_CATALOG_ITEMS = 300;
 
 let currentSelectedShow = { id: "", type: "", youtubeKey: "" };
 let currentCategory = "trending";
@@ -290,7 +294,7 @@ function loadTrending(onDone) {
             renderTrendingCarousel(data.results);
             const firstItem = data.results[0];
             const type = firstItem.media_type || (firstItem.first_air_date ? "tv" : "movie");
-            updateHeroSpotlight(firstItem.id, type);
+            updateHeroSpotlight(firstItem.id, type, firstItem);
         }
         if (typeof onDone === "function") onDone();
     });
@@ -299,6 +303,7 @@ function loadTrending(onDone) {
 // Ibalik ang view sa homepage (trending grid / hero), hindi nire-reset ang scroll
 // maliban kung sinabi (ginagamit ito pareho ng "Back" mula detail at ng popstate).
 function renderHome() {
+    stopDetailTrailer();
     document.getElementById("detailView").style.display = "none";
     document.querySelector(".media-container").style.display = "block";
     document.getElementById("hero-banner").style.display = currentCategory === "trending" ? "flex" : "none";
@@ -452,6 +457,7 @@ function changeCategory(type) {
     event.target.classList.add("active");
 
     // Kung galing sa detail view, isara muna at ibalik sa homepage bago lumipat ng tab
+    stopDetailTrailer();
     document.getElementById("detailView").style.display = "none";
     document.querySelector(".media-container").style.display = "block";
     history.replaceState({}, "", BASE_PATH);
@@ -469,17 +475,19 @@ function changeCategory(type) {
         heroBanner.style.display = "none";
         document.body.classList.add("no-hero");
         updateSEO(null, null, BASE_PATH);
-        fetchManyPages(`${BASE_URL}/discover/movie?sort_by=popularity.desc&language=${tmdbLang()}`, CATALOG_PAGES, (results) => {
-            renderGrid(results, MAX_CATALOG_ITEMS, false);
-        });
+        fetchManyPages(`${BASE_URL}/discover/movie?sort_by=popularity.desc&language=${tmdbLang()}`, CATALOG_PAGES,
+            (firstPage) => renderGrid(firstPage, MAX_CATALOG_ITEMS, false),
+            (allResults) => renderGrid(allResults, MAX_CATALOG_ITEMS, false)
+        );
     } else if (type === "tv") {
         document.getElementById("section-title").innerText = t("section_tv");
         heroBanner.style.display = "none";
         document.body.classList.add("no-hero");
         updateSEO(null, null, BASE_PATH);
-        fetchManyPages(`${BASE_URL}/discover/tv?sort_by=popularity.desc&language=${tmdbLang()}`, CATALOG_PAGES, (results) => {
-            renderGrid(results, MAX_CATALOG_ITEMS, false);
-        });
+        fetchManyPages(`${BASE_URL}/discover/tv?sort_by=popularity.desc&language=${tmdbLang()}`, CATALOG_PAGES,
+            (firstPage) => renderGrid(firstPage, MAX_CATALOG_ITEMS, false),
+            (allResults) => renderGrid(allResults, MAX_CATALOG_ITEMS, false)
+        );
     } else {
         heroBanner.style.display = "flex";
         document.body.classList.remove("no-hero");
@@ -490,28 +498,38 @@ function changeCategory(type) {
                 const firstItem = data.results[0];
                 if (firstItem) {
                     const type2 = firstItem.media_type || (firstItem.first_air_date ? "tv" : "movie");
-                    updateHeroSpotlight(firstItem.id, type2);
+                    updateHeroSpotlight(firstItem.id, type2, firstItem);
                 }
             }
         });
     }
 }
 
-// Kumuha ng ilang pages (para sa maraming resulta sa Movies / TV Shows & Anime)
-function fetchManyPages(baseUrl, totalPages, callback) {
-    const pageRequests = [];
-    for (let page = 1; page <= totalPages; page++) {
-        const separator = baseUrl.includes("?") ? "&" : "?";
-        pageRequests.push(
-            fetch(`${baseUrl}${separator}page=${page}`, {
-                method: "GET",
-                headers: { accept: "application/json", Authorization: `Bearer ${ACCESS_TOKEN}` }
-            }).then(res => res.ok ? res.json() : { results: [] }).catch(() => ({ results: [] }))
-        );
-    }
-    Promise.all(pageRequests).then(pages => {
-        const combined = pages.flatMap(p => p.results || []);
-        callback(combined);
+// Kumuha ng ilang pages (para sa maraming resulta sa Movies / TV Shows & Anime).
+// BUG FIX: dati, hinihintay munang matapos LAHAT ng pages (Promise.all) bago
+// tumawag ng callback — kaya walang lumalabas na poster hangga't hindi nakakuha
+// ang PINAKA-MABAGAL sa lahat ng 15+ requests. Ngayon, unang pinapakita agad ang
+// page 1 (onFirstPage) para bilis lumabas ang unang batch, tapos dumadagdag na
+// lang ang susunod na pages sa background (onMore) habang dumarating sila.
+function fetchManyPages(baseUrl, totalPages, onFirstPage, onMore) {
+    const separator = baseUrl.includes("?") ? "&" : "?";
+    const fetchPage = (page) => fetch(`${baseUrl}${separator}page=${page}`, {
+        method: "GET",
+        headers: { accept: "application/json", Authorization: `Bearer ${ACCESS_TOKEN}` }
+    }).then(res => res.ok ? res.json() : { results: [] }).catch(() => ({ results: [] }));
+
+    fetchPage(1).then(firstData => {
+        onFirstPage(firstData.results || []);
+
+        if (totalPages <= 1) return;
+        const remainingRequests = [];
+        for (let page = 2; page <= totalPages; page++) {
+            remainingRequests.push(fetchPage(page));
+        }
+        Promise.all(remainingRequests).then(pages => {
+            const combined = pages.flatMap(p => p.results || []);
+            if (typeof onMore === "function") onMore(combined);
+        });
     });
 }
 
@@ -658,6 +676,7 @@ function triggerSearch() {
     const wrapper = document.getElementById("searchBoxWrapper");
     if (wrapper) wrapper.classList.remove("open");
 
+    stopDetailTrailer();
     document.getElementById("detailView").style.display = "none";
     document.querySelector(".media-container").style.display = "block";
     document.getElementById("hero-banner").style.display = "none";
@@ -685,6 +704,7 @@ function openDetail(id, type, opts = {}) {
         homeScrollY = window.scrollY;
     }
 
+    stopDetailTrailer();
     document.querySelector(".media-container").style.display = "none";
     document.getElementById("hero-banner").style.display = "none";
     document.getElementById("detailView").style.display = "block";
@@ -810,12 +830,22 @@ function findTrailerKey(videosObj) {
 // trailer metadata), walang lumalabas na trailer kahit meron talaga sa English.
 // Ngayon, kung walang mahanap sa kasalukuyang wika, awtomatiko itong bumabalik
 // sa English (en-US) na resulta bilang fallback.
+//
+// BUG FIX 2: yung fallback sa itaas ay walang epekto pag ang currentLanguage
+// mismo ay English — kasi parehong "en-US" ang unang query at ang fallback,
+// kaya kapag ang totoong trailer ng title ay naka-tag lang sa TMDB bilang
+// Japanese (karaniwan sa maraming anime), palaging walang trailer sa English
+// users kahit meron naman talaga. Ngayon, isinasama na rin sa fallback ang
+// orihinal na wika ng content (data.original_language, e.g. "ja" para sa
+// karamihang anime) pati na rin ang mga video na walang language tag, para
+// mahanap ito anuman ang piniling site language.
 function resolveTrailerKey(data, type, id, callback) {
     const found = findTrailerKey(data.videos);
     if (found) return callback(found);
 
-    fetchData(`${BASE_URL}/${type}/${id}/videos?language=en-US`, (enVideos) => {
-        callback(findTrailerKey(enVideos));
+    const originalLang = data.original_language || "en";
+    fetchData(`${BASE_URL}/${type}/${id}/videos?include_video_language=en,${originalLang},null`, (allVideos) => {
+        callback(findTrailerKey(allVideos));
     });
 }
 
@@ -828,8 +858,33 @@ function renderDetailTrailer(key) {
     }
 }
 
+// BUG FIX: pag-alis ng trailer iframe (hindi lang pag-hide ng section) para
+// tumigil talaga ang video/audio sa background pag umalis ang user sa detail
+// page (Back, pagpalit ng tab, o bagong search). Basta't tinatago ang
+// detailView, dapat tawagin ito.
+function stopDetailTrailer() {
+    const wrapper = document.getElementById("detailTrailerWrapper");
+    if (wrapper) wrapper.innerHTML = "";
+}
+
 // ===================== HERO SPOTLIGHT (homepage banner + "Watch Now") =====================
-function updateHeroSpotlight(id, type) {
+// BUG FIX: dati, hinihintay muna ang BUONG detail fetch (kasama pa ang credits
+// at videos) bago pa man lumabas ang backdrop ng hero banner — dalawang
+// magkasunod na API call bago pa mapinta yung malaking picture. Ngayon, kung
+// may laman na ang trending list item (previewItem — meron na itong
+// backdrop_path at title), ipinipinta agad ang banner gamit iyon, habang
+// tinatapos pa lang sa background ang detalyadong fetch (cast, overview,
+// trailer).
+function updateHeroSpotlight(id, type, previewItem) {
+    if (previewItem) {
+        const previewTitle = previewItem.title || previewItem.name;
+        if (previewTitle) document.getElementById("banner-title").innerText = previewTitle;
+        document.getElementById("banner-tag").innerText = type.toUpperCase();
+        if (previewItem.backdrop_path) {
+            document.getElementById("hero-banner").style.backgroundImage = `linear-gradient(to top, #0c0c0c 10%, rgba(12,12,12,0.4) 50%, rgba(12,12,12,0.8) 100%), url('${BACKDROP_URL + previewItem.backdrop_path}')`;
+        }
+    }
+
     const detailsUrl = `${BASE_URL}/${type}/${id}?append_to_response=credits,videos&language=${tmdbLang()}`;
     fetchData(detailsUrl, (data) => {
         if (!data) return;
@@ -1005,13 +1060,15 @@ function refreshContent() {
     const lang = tmdbLang();
 
     if (currentCategory === "movie") {
-        fetchManyPages(`${BASE_URL}/discover/movie?sort_by=popularity.desc&language=${lang}`, CATALOG_PAGES, (results) => {
-            renderGrid(results, MAX_CATALOG_ITEMS, false);
-        });
+        fetchManyPages(`${BASE_URL}/discover/movie?sort_by=popularity.desc&language=${lang}`, CATALOG_PAGES,
+            (firstPage) => renderGrid(firstPage, MAX_CATALOG_ITEMS, false),
+            (allResults) => renderGrid(allResults, MAX_CATALOG_ITEMS, false)
+        );
     } else if (currentCategory === "tv") {
-        fetchManyPages(`${BASE_URL}/discover/tv?sort_by=popularity.desc&language=${lang}`, CATALOG_PAGES, (results) => {
-            renderGrid(results, MAX_CATALOG_ITEMS, false);
-        });
+        fetchManyPages(`${BASE_URL}/discover/tv?sort_by=popularity.desc&language=${lang}`, CATALOG_PAGES,
+            (firstPage) => renderGrid(firstPage, MAX_CATALOG_ITEMS, false),
+            (allResults) => renderGrid(allResults, MAX_CATALOG_ITEMS, false)
+        );
     } else if (currentCategory === "search" && lastSearchQuery) {
         const url = `${BASE_URL}/search/multi?query=${encodeURIComponent(lastSearchQuery)}&language=${lang}`;
         fetchData(url, (data) => {
@@ -1024,7 +1081,7 @@ function refreshContent() {
                 const firstItem = data.results[0];
                 if (firstItem) {
                     const type = firstItem.media_type || (firstItem.first_air_date ? "tv" : "movie");
-                    updateHeroSpotlight(firstItem.id, type);
+                    updateHeroSpotlight(firstItem.id, type, firstItem);
                 }
             }
         });
