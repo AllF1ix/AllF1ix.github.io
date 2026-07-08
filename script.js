@@ -786,7 +786,7 @@ function renderDetailView(data, type) {
 
     resolveTrailerKey(data, type, data.id, (key) => {
         currentSelectedShow.youtubeKey = key;
-        renderDetailTrailer(key);
+        renderDetailTrailer(key, title);
     });
 }
 
@@ -849,10 +849,19 @@ function resolveTrailerKey(data, type, id, callback) {
     });
 }
 
-function renderDetailTrailer(key) {
+// BUG FIX: dati, kapag walang video na mahanap sa TMDB (hindi laman ng
+// database nila, madalas mangyari sa obscure/lumang titles), lumalabas na
+// lang "No trailer available." Ngayon, may fallback tayo — gumagamit ng
+// opisyal na YouTube "search as playlist" embed (walang kailangang API key)
+// para awtomatikong i-play ang pinaka-unang resulta ng search sa YouTube
+// gamit ang pamagat ng title, sa halip na walang laman.
+function renderDetailTrailer(key, title) {
     const wrapper = document.getElementById("detailTrailerWrapper");
     if (key) {
         wrapper.innerHTML = `<iframe src="https://www.youtube.com/embed/${key}" title="${t("trailer_label")}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+    } else if (title) {
+        const query = encodeURIComponent(`${title} official trailer`);
+        wrapper.innerHTML = `<iframe src="https://www.youtube.com/embed?listType=search&list=${query}" title="${t("trailer_label")}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
     } else {
         wrapper.innerHTML = `<p class="empty-note">${t("no_trailer")}</p>`;
     }
